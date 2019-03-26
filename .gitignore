@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.idea*
 
 # Runtime data
 pids
@@ -28,6 +29,9 @@ bower_components
 
 # node-waf configuration
 .lock-wscript
+
+#Build directory
+build/*
 
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release

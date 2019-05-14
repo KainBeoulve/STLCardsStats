@@ -6,15 +6,15 @@
     "type": "git",
     "url": "https://github.com/KainBeoulve/STLCardsStats.git"
   },
+  "scripts": {
+    "clean": "if exist build rmdir /s /q build",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server"
+  },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5"
-  },
-  "scripts": {
-    "clean": "rmdir /s /q build",
-    "build": "webpack --mode production",
-    "server": "webpack-dev-server"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",

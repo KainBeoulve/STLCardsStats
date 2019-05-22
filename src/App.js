@@ -1,5 +1,11 @@
 import React, { Component } from 'react'
-import { ConfirmSignIn, SignIn, withAuthenticator } from 'aws-amplify-react';
+import {
+    ConfirmSignIn,
+    SignIn,
+    RequireNewPassword,
+    VerifyContact,
+    withAuthenticator
+} from 'aws-amplify-react';
 import Auth from '@aws-amplify/auth';
 import Analytics from '@aws-amplify/analytics';
 import Chart from 'chart.js';
@@ -71,9 +77,7 @@ class App extends Component {
                     yPadding: 25,
                     caretPadding: 18,
                     callbacks: {
-                        label: (tooltipItem) => {
-                            return `${(Math.round(parseFloat(tooltipItem.value)*1000)/1000).toFixed(3)}`
-                        }
+                        label: (tooltipItem) => `${(Math.round(parseFloat(tooltipItem.value)*1000)/1000).toFixed(3)}`
                     }
                 }
             }
@@ -121,5 +125,7 @@ class App extends Component {
 
 export default withAuthenticator(App, false, [
     <SignIn/>,
-    <ConfirmSignIn/>
+    <ConfirmSignIn/>,
+    <RequireNewPassword/>,
+    <VerifyContact/>
 ]);

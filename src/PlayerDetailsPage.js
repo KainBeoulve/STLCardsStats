@@ -1,35 +1,21 @@
-import React, { Component } from 'react'
-import {
-    ConfirmSignIn,
-    SignIn,
-    RequireNewPassword,
-    VerifyContact,
-    withAuthenticator
-} from 'aws-amplify-react';
+import React, { Component } from 'react';
 import Auth from '@aws-amplify/auth';
-import Analytics from '@aws-amplify/analytics';
 import Chart from 'chart.js';
 import Grid from '@material-ui/core/Grid';
 import moment from 'moment';
 
-Analytics.configure({ disabled: true});
-Auth.configure({
-    region: 'us-east-1',
-    userPoolId: 'us-east-1_OBTaMqcJV',
-    userPoolWebClientId: '7l2sb4mqghr6fil1hmaj5k1e0b'
-});
-
-Chart.defaults.global.defaultFontSize = 24;
+Chart.defaults.global.defaultFontSize = 16;
 Chart.defaults.global.defaultFontFamily = "'PT Sans', sans-serif";
 Chart.defaults.global.defaultColor = "rgba(255,0,0,1)";
-Chart.defaults.global.elements.line.tension = 0;
 
-class App extends Component {
+class PlayerDetailsPage extends Component {
     chartRef = React.createRef();
+
+    static SCALING_FACTOR = 0.75;
 
     componentDidMount = async () => {
         const myChartRef = this.chartRef.current.getContext("2d");
-        const data = await this.makeTempCall();
+        const data = await this.makeTempCall(this.props.match.params.playerName);
 
         const chartData = [];
 
@@ -44,7 +30,7 @@ class App extends Component {
             type: 'line',
             data: {
                 datasets: [{
-                    label: "Paul Goldschmidt's Batting Average",
+                    label: `${data.PlayerName.split("-")[1]} ${data.PlayerName.split("-")[0]}'s Batting Average`,
                     data: chartData,
                     fill: false,
                     borderColor: "rgba(255,0,0,1)",
@@ -57,7 +43,13 @@ class App extends Component {
                     xAxes: [{
                         type: 'time',
                         time: {
-                            unit: 'day',
+                            ticks: {
+                                source: "data"
+                            },
+                            unit: "day",
+                            displayFormats: {
+                                day: "MMM D"
+                            },
                             tooltipFormat: "MMM DD"
                         },
                         distribution: 'linear'
@@ -65,9 +57,9 @@ class App extends Component {
                     yAxes: [{
                         type: 'linear',
                         ticks: {
-                            min: 0,
-                            max: 0.35,
-                            callback: value => value === 0 ? 0 : value.toFixed(3)
+                            min: .000,
+                            max: .400,
+                            callback: value => value.toFixed(3)
                         }
                     }]
                 },
@@ -77,23 +69,38 @@ class App extends Component {
                     yPadding: 25,
                     caretPadding: 18,
                     callbacks: {
-                        label: (tooltipItem) => `${(Math.round(parseFloat(tooltipItem.value)*1000)/1000).toFixed(3)}`
+                        label: (tooltipItem) => `${
+                            (Math.round(parseFloat(tooltipItem.value)*1000)/1000).toFixed(3)
+                        }`
                     }
                 }
             }
         });
     };
 
+    /* TODO: Rethink this
+    getAverageData = (data) => {
+        let numerator = 0;
+        let denominator = 0;
+        data.forEach(entry => {
+            numerator = numerator + entry.y;
+            denominator++;
+        });
+        const average = numerator/denominator;
+        return {max: average*(1 + PlayerDetailsPage.SCALING_FACTOR), min: average*(1- PlayerDetailsPage.SCALING_FACTOR)};
+    };
+    */
+
     getAuthToken = async () => {
         const data = await Auth.currentSession();
         return data.idToken.jwtToken;
     };
 
-    makeTempCall = async () => (
+    makeTempCall = async (playerName) => (
         await this.checkStatus(
             await fetch("https://api.stlcardinalsstatistics.com/getPlayerInfo", {
                 method: "POST",
-                body: JSON.stringify({ "playerName": "Goldschmidt-Paul" }),
+                body: JSON.stringify({ "playerName": playerName }),
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": await this.getAuthToken()
@@ -123,9 +130,4 @@ class App extends Component {
     }
 }
 
-export default withAuthenticator(App, false, [
-    <SignIn/>,
-    <ConfirmSignIn/>,
-    <RequireNewPassword/>,
-    <VerifyContact/>
-]);
+export default PlayerDetailsPage;

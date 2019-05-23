@@ -1,0 +1,88 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Auth from '@aws-amplify/auth';
+import Grid from '@material-ui/core/Grid';
+
+class PlayerSelectPage extends Component {
+    state = {
+        playerData: []
+    };
+
+    static PLAYER_NAMES = [
+        "Goldschmidt-Paul",
+        "Fowler-Dexter",
+        "DeJong-Paul",
+        "Molina-Yadier",
+        "Carpenter-Matt",
+        "Ozuna-Marcell",
+        "Bader-Harrison",
+        "Martinez-Jose",
+        "Wong-Kolten"
+    ];
+
+    componentDidMount = async () => {
+        const playerDataArray = [];
+
+        await Promise.all(
+            PlayerSelectPage.PLAYER_NAMES.map(async name => {
+                const playerData = await this.makeTempCall(name);
+                playerDataArray.push(playerData);
+            })
+        );
+
+        playerDataArray.sort((a, b) => a.PlayerName > b.PlayerName);
+
+        this.setState({
+            playerData: playerDataArray
+        })
+    };
+
+    getAuthToken = async () => {
+        const data = await Auth.currentSession();
+        return data.idToken.jwtToken;
+    };
+
+    makeTempCall = async (playerName) => (
+        await this.checkStatus(
+            await fetch("https://api.stlcardinalsstatistics.com/getPlayerInfo", {
+                method: "POST",
+                body: JSON.stringify({ "playerName": playerName }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": await this.getAuthToken()
+                }
+            })
+        )
+    );
+
+    checkStatus = async (response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        const jsonResponse = await response.json();
+        throw new Error(`${response.statusText}: ${jsonResponse.message}`);
+    };
+
+    render() {
+        return  (
+            <div>
+                <h1 className="centerText">CHOOSE YOUR PLAYER!!!!!</h1>
+                <Grid container spacing={16}>
+                    {this.state.playerData.length > 0 ?
+                        this.state.playerData.map(player => (
+                            <Grid item xs={2} key={player.PlayerName}>
+                                <div className="centerText">
+                                    <Link to={`/player/${player.PlayerName}`}>
+                                        <img src={player.officialImageSrc} alt="Photo"/>
+                                    </Link>
+                                    <h3>{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</h3>
+                                </div>
+                            </Grid>
+                        )) : null
+                    }
+                </Grid>
+            </div>
+        )
+    }
+}
+export default PlayerSelectPage;

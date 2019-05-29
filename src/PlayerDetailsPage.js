@@ -48,9 +48,9 @@ class PlayerDetailsPage extends Component {
                             },
                             unit: "day",
                             displayFormats: {
-                                day: "MMM D"
+                                day: "M/D"
                             },
-                            tooltipFormat: "MMM DD"
+                            tooltipFormat: "MMM D"
                         },
                         distribution: 'linear'
                     }],
@@ -98,9 +98,8 @@ class PlayerDetailsPage extends Component {
 
     makeTempCall = async (playerName) => (
         await this.checkStatus(
-            await fetch("https://api.stlcardinalsstatistics.com/getPlayerInfo", {
-                method: "POST",
-                body: JSON.stringify({ "playerName": playerName }),
+            await fetch(`https://api.stlcardinalsstatistics.com/getPlayerInfo?playerName=${playerName}`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": await this.getAuthToken()
@@ -120,10 +119,15 @@ class PlayerDetailsPage extends Component {
     render() {
         return  (
             <div>
-                <Grid container spacing={24}>
-                    <Grid item xs={6}>
+                <Grid container spacing={10}>
+                    <Grid item xs={1}/>
+                    <Grid item xs={5}>
                         <canvas id="myChart" ref={this.chartRef}/>
                     </Grid>
+                    <Grid item xs={5}>
+                        <h1 className="centerText">NEED TO PUT ANOTHER GRAPH HERE</h1>
+                    </Grid>
+                    <Grid item xs={1}/>
                 </Grid>
             </div>
         )

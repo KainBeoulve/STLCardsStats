@@ -44,9 +44,8 @@ class PlayerSelectPage extends Component {
 
     makeTempCall = async (playerName) => (
         await this.checkStatus(
-            await fetch("https://api.stlcardinalsstatistics.com/getPlayerInfo", {
-                method: "POST",
-                body: JSON.stringify({ "playerName": playerName }),
+            await fetch(`https://api.stlcardinalsstatistics.com/getPlayerInfo?playerName=${playerName}`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": await this.getAuthToken()
@@ -67,19 +66,23 @@ class PlayerSelectPage extends Component {
         return  (
             <div>
                 <h1 className="centerText">CHOOSE YOUR PLAYER!!!!!</h1>
-                <Grid container spacing={16}>
-                    {this.state.playerData.length > 0 ?
-                        this.state.playerData.map(player => (
-                            <Grid item xs={2} key={player.PlayerName}>
-                                <div className="centerText">
-                                    <Link to={`/player/${player.PlayerName}`}>
-                                        <img src={player.officialImageSrc} alt="Photo"/>
-                                    </Link>
-                                    <h3>{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</h3>
-                                </div>
-                            </Grid>
-                        )) : null
-                    }
+                <Grid container>
+                    <Grid item xs={1}/>
+                    <Grid item xs={10} container spacing={10}>
+                        {this.state.playerData.length > 0 ?
+                            this.state.playerData.map(player => (
+                                <Grid item xs={6} md={4} lg={3} xl={2} key={player.PlayerName}>
+                                    <div className="centerText paddingAll">
+                                        <Link to={`/player/${player.PlayerName}`}>
+                                            <img src={player.officialImageSrc} alt="Photo"/>
+                                        </Link>
+                                        <h3>{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</h3>
+                                    </div>
+                                </Grid>
+                            )) : null
+                        }
+                    </Grid>
+                    <Grid item xs={1}/>
                 </Grid>
             </div>
         )

@@ -65,19 +65,22 @@ class PlayerSelectPage extends Component {
     render() {
         return  (
             <div>
-                <h1 className="centerText">CHOOSE YOUR PLAYER!!!!!</h1>
-                <Grid container>
+                <div className="header">
+                    <div>Welcome to stlcardinalsstatistics.com</div>
+                    <div>Select a player to view details</div>
+                </div>
+                <Grid container spacing={0}>
                     <Grid item xs={1}/>
-                    <Grid item xs={10} container spacing={10}>
+                    <Grid item xs={10} container spacing={5}>
                         {this.state.playerData.length > 0 ?
                             this.state.playerData.map(player => (
                                 <Grid item xs={6} md={4} lg={3} xl={2} key={player.PlayerName}>
-                                    <div className="centerText paddingAll">
-                                        <Link to={`/player/${player.PlayerName}`}>
-                                            <img src={player.officialImageSrc} alt="Photo"/>
-                                        </Link>
-                                        <h3>{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</h3>
-                                    </div>
+                                        <div className="centerText pictureBorder">
+                                            <Link to={`/player/${player.PlayerName}`}>
+                                                <img src={player.officialImageSrc} alt="Photo"/>
+                                            </Link>
+                                            <div className="whiteText">{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</div>
+                                        </div>
                                 </Grid>
                             )) : null
                         }

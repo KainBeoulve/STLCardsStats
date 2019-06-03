@@ -13,8 +13,8 @@ import {
 } from 'aws-amplify-react';
 import Auth from '@aws-amplify/auth';
 import Analytics from '@aws-amplify/analytics';
-import PlayerDetailsPage from "Source/PlayerDetailsPage";
-import PlayerSelectPage from "Source/PlayerSelectPage";
+import PlayerDetailsPage from "src/js/pages/PlayerDetailsPage";
+import PlayerSelectPage from "src/js/pages/PlayerSelectPage";
 
 Analytics.configure({ disabled: true});
 Auth.configure({

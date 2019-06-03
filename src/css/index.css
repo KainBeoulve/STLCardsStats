@@ -1,0 +1,62 @@
+body {
+    background-color: rgb(28,28,28);
+    margin: 0;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.paddingAll {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.graphBorder {
+    box-shadow: 5px 5px black;
+    background-color: rgb(60,60,60);
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 12px;
+}
+
+.pictureBorder {
+    box-shadow: 5px 5px black;
+    background-color: rgb(60,60,60);
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 12px;
+}
+
+.verticalMargin {
+    margin-bottom: 10px;
+}
+
+.whiteText {
+    margin: 10px 0;
+    color: white;
+    font-family: Rockwell, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    background: #c4203c;
+    color: white;
+    font-size: 45px;
+    font-weight: bold;
+    font-family: Rockwell, sans-serif;
+}
+
+img {
+    max-width: 100%;
+    min-width: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}

@@ -16,7 +16,7 @@ module.exports = {
         hot: true
     },
 
-    entry: ["babel-polyfill", "./src/index.js" ],
+    entry: ["babel-polyfill", "./src/js/index.js" ],
 
     output: {
         filename: "[name].[hash].js",
@@ -63,7 +63,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            "Source": path.resolve(__dirname, 'src')
+            "src": path.resolve(__dirname, 'src')
         }
     },
 

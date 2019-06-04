@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import Chart from "chart.js";
-import moment from "moment";
-import Constants from "src/js/utils/Constants";
+import React, { Component } from 'react';
+import Chart from 'chart.js';
+import moment from 'moment';
+import Constants from 'src/js/utils/Constants';
 import GraphFunctions from "src/js/utils/GraphFunctions";
 
 /**
- * React component that displays a batting average graph
+ * React component that displays a slugging percentage graph
  * @props data: batting data from backend
  */
-export default class BattingAverageGraph extends Component {
+export default class SluggingPercentageGraph extends Component {
     chartRef = React.createRef();
     ticks = [];
 
@@ -19,7 +19,7 @@ export default class BattingAverageGraph extends Component {
             for (let i = 0; i < this.props.data.gameDates.length; i++) {
                 chartData.push({
                     x: moment(this.props.data.gameDates[i].toString()).toDate(),
-                    y: this.props.data.battingAverage[i]
+                    y: this.props.data.sluggingPercentage[i]
                 });
             }
         }
@@ -31,7 +31,7 @@ export default class BattingAverageGraph extends Component {
         // Focus the data range to the relevant portion
         GraphFunctions.adjustAxisRange(
             chart,
-            GraphFunctions.getBoundingAxisValues(chartData, 0.95, 0.05, 0.45, 0),
+            GraphFunctions.getBoundingAxisValues(chartData, 0.95, 0.05, 2, 0),
             this.ticks
         );
 
@@ -64,7 +64,7 @@ export default class BattingAverageGraph extends Component {
                 responsive: true,
                 title: {
                     display: true,
-                    text: "Batting Average",
+                    text: "Slugging Percentage",
                     fontColor: Constants.COLORS.WHITE,
                     fontSize: 16,
                 },

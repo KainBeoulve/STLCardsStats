@@ -3,8 +3,9 @@ import Auth from '@aws-amplify/auth';
 import Grid from '@material-ui/core/Grid';
 import Hidden from "@material-ui/core/Hidden";
 import BattingAverageGraph from "src/js/graphs/BattingAverageGraph";
+import SluggingPercentageGraph from "src/js/graphs/SluggingPercentageGraph";
 
-class PlayerDetailsPage extends Component {
+export default class PlayerDetailsPage extends Component {
     state = {
         data: {}
     };
@@ -57,7 +58,7 @@ class PlayerDetailsPage extends Component {
                         </Hidden>
                         <Grid item lg={5} xs={10}>
                             <div className="graphBorder">
-                                <BattingAverageGraph data={this.state.data}/>
+                                <SluggingPercentageGraph data={this.state.data}/>
                             </div>
                         </Grid>
                         <Grid item xs={1}/>
@@ -67,5 +68,3 @@ class PlayerDetailsPage extends Component {
         )
     }
 }
-
-export default PlayerDetailsPage;

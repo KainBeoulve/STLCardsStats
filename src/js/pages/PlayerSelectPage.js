@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Auth from '@aws-amplify/auth';
 import Grid from '@material-ui/core/Grid';
 
-class PlayerSelectPage extends Component {
+export default class PlayerSelectPage extends Component {
     state = {
         playerData: []
     };
@@ -66,7 +66,7 @@ class PlayerSelectPage extends Component {
         return  (
             <div>
                 <div className="header">
-                    <div>Welcome to stlcardinalsstatistics.com</div>
+                    <div>Welcome to StlCardinalsStatistics.com</div>
                     <div>Select a player to view details</div>
                 </div>
                 <Grid container spacing={0}>
@@ -91,4 +91,3 @@ class PlayerSelectPage extends Component {
         )
     }
 }
-export default PlayerSelectPage;

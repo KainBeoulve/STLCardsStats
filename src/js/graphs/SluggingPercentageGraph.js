@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
-import moment from 'moment';
 import Constants from 'src/js/utils/Constants';
 import GraphFunctions from "src/js/utils/GraphFunctions";
 
@@ -9,20 +8,17 @@ import GraphFunctions from "src/js/utils/GraphFunctions";
  * @props data: batting data from backend
  */
 export default class SluggingPercentageGraph extends Component {
+    static ABSOLUTE_MAX = 2;
+    static ABSOLUTE_MIN = 0;
+    static INTERVAL_EXPAND_PERCENT = 0.05;
+    static DATA_PERCENT_REQUIRED = 0.90;
+
     chartRef = React.createRef();
     ticks = [];
 
     componentDidUpdate = () => {
-        // Create data objects for the chart
-        const chartData = [];
-        if (this.props.data.gameDates) {
-            for (let i = 0; i < this.props.data.gameDates.length; i++) {
-                chartData.push({
-                    x: moment(this.props.data.gameDates[i].toString()).toDate(),
-                    y: this.props.data.sluggingPercentage[i]
-                });
-            }
-        }
+        // Create the data array for the chart
+        const chartData = GraphFunctions.generateChartData(this.props.data, Constants.GRAPH_DATA_TYPES.SLUGGING_PERCENTAGE);
 
         // Create the chart
         const myChartRef = this.chartRef.current.getContext("2d");
@@ -31,7 +27,12 @@ export default class SluggingPercentageGraph extends Component {
         // Focus the data range to the relevant portion
         GraphFunctions.adjustAxisRange(
             chart,
-            GraphFunctions.getBoundingAxisValues(chartData, 0.95, 0.05, 2, 0),
+            GraphFunctions.getBoundingAxisValues(chartData,
+                SluggingPercentageGraph.DATA_PERCENT_REQUIRED,
+                SluggingPercentageGraph.INTERVAL_EXPAND_PERCENT,
+                SluggingPercentageGraph.ABSOLUTE_MAX,
+                SluggingPercentageGraph.ABSOLUTE_MIN
+            ),
             this.ticks
         );
 

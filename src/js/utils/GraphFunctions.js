@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default class GraphFunctions {
     /**
      * This function adjusts the data range of the given chart. It is meant to "focus" the data in situations where
@@ -38,6 +40,23 @@ export default class GraphFunctions {
                 entry.y >= ticks[1]) ? ticks[1] + interval : ticks[1];
         chart.options.scales.yAxes[0].ticks.stepSize = interval;
         chart.update();
+    };
+
+    /**
+     * This function returns the data array in point format corresponding to a specific requested statistic specified
+     * as the "dataArrayString" parameter.
+     */
+    static generateChartData = (dataObject, dataArrayString) => {
+        const chartData = [];
+        if (dataObject.gameDates) {
+            for (let i = 0; i < dataObject.gameDates.length; i++) {
+                chartData.push({
+                    x: moment(dataObject.gameDates[i].toString()).toDate(),
+                    y: dataObject[dataArrayString][i]
+                });
+            }
+        }
+        return chartData;
     };
 
     /**

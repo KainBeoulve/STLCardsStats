@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Chart from "chart.js";
-import moment from "moment";
 import Constants from "src/js/utils/Constants";
 import GraphFunctions from "src/js/utils/GraphFunctions";
 
@@ -9,20 +8,17 @@ import GraphFunctions from "src/js/utils/GraphFunctions";
  * @props data: batting data from backend
  */
 export default class BattingAverageGraph extends Component {
+    static ABSOLUTE_MAX = 1;
+    static ABSOLUTE_MIN = 0;
+    static INTERVAL_EXPAND_PERCENT = 0.05;
+    static DATA_PERCENT_REQUIRED = 0.90;
+
     chartRef = React.createRef();
     ticks = [];
 
     componentDidUpdate = () => {
-        // Create data objects for the chart
-        const chartData = [];
-        if (this.props.data.gameDates) {
-            for (let i = 0; i < this.props.data.gameDates.length; i++) {
-                chartData.push({
-                    x: moment(this.props.data.gameDates[i].toString()).toDate(),
-                    y: this.props.data.battingAverage[i]
-                });
-            }
-        }
+        // Create the data array for the chart
+        const chartData = GraphFunctions.generateChartData(this.props.data, Constants.GRAPH_DATA_TYPES.BATTING_AVERAGE);
 
         // Create the chart
         const myChartRef = this.chartRef.current.getContext("2d");
@@ -31,7 +27,13 @@ export default class BattingAverageGraph extends Component {
         // Focus the data range to the relevant portion
         GraphFunctions.adjustAxisRange(
             chart,
-            GraphFunctions.getBoundingAxisValues(chartData, 0.95, 0.05, 0.45, 0),
+            GraphFunctions.getBoundingAxisValues(
+                chartData,
+                BattingAverageGraph.DATA_PERCENT_REQUIRED,
+                BattingAverageGraph.INTERVAL_EXPAND_PERCENT,
+                BattingAverageGraph.ABSOLUTE_MAX,
+                BattingAverageGraph.ABSOLUTE_MIN
+            ),
             this.ticks
         );
 

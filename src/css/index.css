@@ -12,7 +12,7 @@ body {
     padding-right: 5px;
 }
 
-.graphBorder {
+.border {
     box-shadow: 5px 5px black;
     background-color: rgb(60,60,60);
     border-style: solid;
@@ -21,13 +21,16 @@ body {
     border-radius: 12px;
 }
 
-.pictureBorder {
-    box-shadow: 5px 5px black;
-    background-color: rgb(60,60,60);
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
-    border-radius: 12px;
+.border.picture {
+    margin: 10px 20px;
+}
+
+.border.graph {
+    margin: 10px 5px;
+}
+
+.border.pictureArrayHeader {
+    margin: 20px 8.33333333%;
 }
 
 .verticalMargin {
@@ -40,6 +43,10 @@ body {
     font-family: Rockwell, sans-serif;
     font-size: 20px;
     font-weight: bold;
+}
+
+.whiteText.large {
+    font-size: 30px;
 }
 
 .header {

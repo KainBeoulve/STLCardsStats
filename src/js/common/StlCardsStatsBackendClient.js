@@ -15,6 +15,18 @@ export default class StlCardsStatsBackendClient {
         )
     );
 
+    getAllPlayerNames = async (getPitchers) => (
+        await this.checkStatus(
+            await fetch(`${StlCardsStatsBackendClient.BACKEND_URL}/getAllPlayerNames?getPitchers=${getPitchers}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": await this.getAuthToken()
+                }
+            })
+        )
+    );
+
     getAuthToken = async () => {
         const data = await Auth.currentSession();
         return data.idToken.jwtToken;

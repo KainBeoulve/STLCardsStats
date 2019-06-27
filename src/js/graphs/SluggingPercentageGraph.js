@@ -5,7 +5,7 @@ import GraphFunctions from "src/js/utils/GraphFunctions";
 
 /**
  * React component that displays a slugging percentage graph
- * @props data: batting data from backend
+ * @props data: slugging percentage data from backend
  */
 export default class SluggingPercentageGraph extends Component {
     static ABSOLUTE_MAX = 2;
@@ -27,7 +27,8 @@ export default class SluggingPercentageGraph extends Component {
         // Focus the data range to the relevant portion
         GraphFunctions.adjustAxisRange(
             chart,
-            GraphFunctions.getBoundingAxisValues(chartData,
+            GraphFunctions.getBoundingAxisValues(
+                chartData,
                 SluggingPercentageGraph.DATA_PERCENT_REQUIRED,
                 SluggingPercentageGraph.INTERVAL_EXPAND_PERCENT,
                 SluggingPercentageGraph.ABSOLUTE_MAX,

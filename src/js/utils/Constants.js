@@ -10,4 +10,6 @@ export default class Constants {
         BATTING_AVERAGE: "battingAverage",
         SLUGGING_PERCENTAGE: "sluggingPercentage"
     };
+
+    static AXIS_TICK_ADJUSTMENT_CUTOFF = 10;
 }

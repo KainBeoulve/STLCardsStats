@@ -33,7 +33,7 @@ export default class PlayerSelectPage extends Component {
                     <div>Select a player to view details</div>
                 </div>
                 <div className="border picture pictureArrayHeader centerText">
-                    <div className="whiteText large">Position Players</div>
+                    <div className="whiteText verticalMargin large">Position Players</div>
                 </div>
                 <Grid container spacing={0}>
                     <Grid item xs={1}/>
@@ -43,9 +43,9 @@ export default class PlayerSelectPage extends Component {
                                 <Grid item xs={6} sm={4} md={3} lg={2} key={player.PlayerName}>
                                         <div className="centerText border picture">
                                             <Link to={`/player/${player.PlayerName}`}>
-                                                <img src={player.officialImageSrc} alt="Photo"/>
+                                                <img className="selectPageImage" src={player.officialImageSrc} alt="Photo"/>
                                             </Link>
-                                            <div className="whiteText">{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</div>
+                                            <div className="whiteText verticalMargin">{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</div>
                                         </div>
                                 </Grid>
                             )) : null
@@ -54,7 +54,7 @@ export default class PlayerSelectPage extends Component {
                     <Grid item xs={1}/>
                 </Grid>
                 <div className="border picture pictureArrayHeader centerText">
-                    <div className="whiteText large">Pitchers</div>
+                    <div className="whiteText verticalMargin large">Pitchers</div>
                 </div>
                 <Grid container spacing={0}>
                     <Grid item xs={1}/>
@@ -64,9 +64,9 @@ export default class PlayerSelectPage extends Component {
                                 <Grid item xs={6} sm={4} md={3} lg={2} key={player.PlayerName}>
                                     <div className="centerText border picture">
                                         <Link to={`/player/${player.PlayerName}`}>
-                                            <img src={player.officialImageSrc} alt="Photo"/>
+                                            <img className="selectPageImage" src={player.officialImageSrc} alt="Photo"/>
                                         </Link>
-                                        <div className="whiteText">{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</div>
+                                        <div className="whiteText verticalMargin">{`${player.PlayerName.split("-")[1]} ${player.PlayerName.split("-")[0]}`}</div>
                                     </div>
                                 </Grid>
                             )) : null

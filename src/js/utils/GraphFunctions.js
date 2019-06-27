@@ -1,4 +1,5 @@
 import moment from "moment";
+import Constants from "src/js/utils/Constants";
 
 export default class GraphFunctions {
     /**
@@ -30,16 +31,18 @@ export default class GraphFunctions {
      * focuses data by omitting extraneous ticks if no data is present within the top and bottom intervals.
      */
     static adjustAxisTickExtremes = (chart, ticks) => {
-        const interval = ticks[1]-ticks[2];
+        if (chart.data.datasets[0].data.length > Constants.AXIS_TICK_ADJUSTMENT_CUTOFF) {
+            const interval = ticks[1] - ticks[2];
 
-        chart.options.scales.yAxes[0].ticks.min = chart.data.datasets[0].data.some(
-            entry => entry.y >= ticks[ticks.length - 2] - interval &&
-                entry.y <= ticks[ticks.length - 2]) ? ticks[ticks.length - 2] - interval : ticks[ticks.length - 2];
-        chart.options.scales.yAxes[0].ticks.max = chart.data.datasets[0].data.some(
-            entry => entry.y <= ticks[1] + interval &&
-                entry.y >= ticks[1]) ? ticks[1] + interval : ticks[1];
-        chart.options.scales.yAxes[0].ticks.stepSize = interval;
-        chart.update();
+            chart.options.scales.yAxes[0].ticks.min = chart.data.datasets[0].data.some(
+                entry => entry.y >= ticks[ticks.length - 2] - interval &&
+                    entry.y <= ticks[ticks.length - 2]) ? ticks[ticks.length - 2] - interval : ticks[ticks.length - 2];
+            chart.options.scales.yAxes[0].ticks.max = chart.data.datasets[0].data.some(
+                entry => entry.y <= ticks[1] + interval &&
+                    entry.y >= ticks[1]) ? ticks[1] + interval : ticks[1];
+            chart.options.scales.yAxes[0].ticks.stepSize = interval;
+            chart.update();
+        }
     };
 
     /**

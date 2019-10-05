@@ -29,7 +29,7 @@ export default class StlCardsStatsBackendClient {
 
     getAuthToken = async () => {
         const data = await Auth.currentSession();
-        return data.idToken.jwtToken;
+        return data.getIdToken().getJwtToken();
     };
 
     checkStatus = async (response) => {

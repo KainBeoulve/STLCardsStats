@@ -44,5 +44,8 @@ const Router = () => (
 );
 
 export default withAuthenticator(
-    Router, false, [ <SignIn/>, <ConfirmSignIn/>, <RequireNewPassword/>, <VerifyContact/> ]
+    Router, {
+        includeGreetings: false,
+        authenticatorComponents: [<SignIn/>, <ConfirmSignIn/>, <RequireNewPassword/>, <VerifyContact/>],
+    }
 );

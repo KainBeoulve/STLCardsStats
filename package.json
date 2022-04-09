@@ -19,7 +19,7 @@
     "aws-amplify-react": "^2.6.3",
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2"
